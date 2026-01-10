@@ -4,6 +4,24 @@ const whatsappOverlay = document.getElementById("whatsappOverlay");
 const wapp = document.getElementById("wapp");
 
 
+
+class Empresa {
+    constructor(nombre,background,logo,numero){
+        this.nombre = nombre;
+        this.background = background;
+        this.logo = logo;
+        this.numero = numero;
+    }
+    toHtml() {
+        return `
+            <img src="${this.logo}"alt="">
+            <h2>${this.nombre}</h2>
+            <p>Escribinos al Whatsapp ${this.numero}</p>`
+    }
+}
+
+const empresa = new Empresa("RestoFan", "", "", "+542804220856");
+
 class Overlay {
     constructor() {
         this.overlay = document.createElement("div");
@@ -138,7 +156,7 @@ class Categoria {
         this.img = img;
     }
     toHtmlList() {
-        return `<li><a href="#${this.nombre}">${this.nombre}</a></li>`
+        return `<li><a href="#${this.nombre}" onclick="closeTab();">${this.nombre}</a></li>`
     }
     toHtmlCat() {
         return `<section id="${this.nombre}" class="categoria">
@@ -172,7 +190,7 @@ class DivOverlay {
     }
 }
 
-// Clase Cart mejorada
+
 class Cart {
     constructor() {
         this.itemsCart = [];
@@ -336,8 +354,8 @@ class Cart {
         const mensaje = this.generarMensajeWhatsApp();
         if (mensaje) {
             // Reemplaza este número con el número de WhatsApp del negocio
-            const numeroWhatsApp = '5491234567890'; // CAMBIAR POR TU NÚMERO
-            const url = `https://wa.me/${numeroWhatsApp}?text=${mensaje}`;
+
+            const url = `https://wa.me/${empresa.numero}?text=${mensaje}`;
             window.open(url, '_blank');
 
             // Opcional: vaciar el carrito después de enviar
@@ -363,10 +381,10 @@ class Cart {
     }
 }
 
-// Crear instancia global del carrito
+
 const carrito = new Cart();
 
-// Event listeners para cerrar el carrito
+
 document.addEventListener('DOMContentLoaded', () => {
     const cartOverlay = document.getElementById('cart-overlay');
     const closeCartBtn = document.getElementById('close-cart');
@@ -432,11 +450,18 @@ function insertarCategorias(){
     const tat = document.getElementById("navList");
     tat.innerHTML = categorias.map(cat => cat.toHtmlList()).join('');
 }
+
 document.addEventListener('DOMContentLoaded', () => {
     insertarCategorias();
     productos.forEach((prod) => {
         mostrarProds(prod);
     });
     agregarListen();
-
+    document.getElementById("nosotros").innerHTML = empresa.toHtml();
 });
+
+function closeTab() {
+    if (navbar.style.left==="0px") {
+        navbar.style.left = "-100%";
+    }
+}

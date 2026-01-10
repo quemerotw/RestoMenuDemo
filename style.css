@@ -580,7 +580,6 @@ footer {
         width: 80px;
         height: 80px;
     }
-}
     nav {
         position: fixed;
         top: 0;
@@ -680,7 +679,7 @@ footer {
         width: 70px;
         height: 70px;
     }
-}
+
 
     header {
         padding: 10px 15px;
@@ -706,6 +705,7 @@ footer {
     nav {
         width: 70%;
     }
+
     .cart-header h2 {
         font-size: 1.2rem;
     }
