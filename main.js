@@ -22,6 +22,55 @@ class Empresa {
 
 const empresa = new Empresa("RestoFan", "", "", "+542804220856");
 
+class BackButtonManager {
+    constructor() {
+        this.init();
+    }
+
+    init() {
+        window.addEventListener('popstate', (event) => {
+            this.handleBackButton(event);
+        });
+    }
+
+    pushState(type) {
+        const state = { modal: type };
+        history.pushState(state, '');
+    }
+
+    handleBackButton(event) {
+        const popup = document.getElementById('popup');
+        if (popup && popup.parentElement) {
+            const overlay = popup.parentElement;
+            if (overlay && overlay.style.opacity === '1') {
+                overlay.style.opacity = '0';
+                popup.style.transform = 'scale(0.8)';
+                popup.style.opacity = '0';
+                setTimeout(() => {
+                    overlay.remove();
+                    document.body.style.overflow = 'auto';
+                }, 300);
+                return;
+            }
+        }
+
+        const cartPanel = document.getElementById('cart-panel');
+        if (cartPanel && cartPanel.classList.contains('active')) {
+            carrito.toggleCart();
+            return;
+        }
+
+        const navbar = document.getElementById('navbar');
+        if (navbar && navbar.style.left === '0px') {
+            navbar.style.left = '-100%';
+            return;
+        }
+    }
+}
+
+const backButtonManager = new BackButtonManager();
+
+
 class Overlay {
     constructor() {
         this.overlay = document.createElement("div");
@@ -399,13 +448,13 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 const productos = [
-    new Prod(1, "Pizza Muzzarella", 8500, "Salsa de tomate, muzzarella y aceitunas", "./images/pizza-muzza.jpg",1),
-    new Prod(2, "Pizza Napolitana", 9500, "Tomate, muzzarella, jamón y tomates frescos", "./images/pizza-napo.jpg",1),
-    new Prod(3, "Empanadas x12", 6000, "Carne, jamón y queso, pollo", "./images/empanadas.jpg",2),
-    new Prod(4, "Milanesa Napolitana", 9500, "Con papas fritas y ensalada", "./images/milanesa.jpg",3),
-    new Prod(5, "Hamburguesa Completa", 7500, "Doble carne, queso, lechuga, tomate", "./images/hamburguesa.jpg",3),
-    new Prod(6, "Lomito Completo", 8000, "Lomo, queso, lechuga, tomate, huevo", "./images/lomito.jpg",3),
-    new Prod(7, "Coca Cola", 5000, "1.5lts",".images/coca15.jpg",4)
+    new Prod(1, "Pizza Muzzarella", 8500, "Salsa de tomate, muzzarella y aceitunas", "./images/Muzza.png",1),
+    new Prod(2, "Pizza Napolitana", 9500, "Tomate, muzzarella, jamón y tomates frescos", "./images/Napo.png",1),
+    new Prod(3, "Empanadas x12", 6000, "Carne, jamón y queso, pollo", "./images/empanadas.png",2),
+    new Prod(4, "Milanesa Napolitana", 9500, "Con papas fritas y ensalada", "./images/milanesa.png",3),
+    new Prod(5, "Hamburguesa Completa", 7500, "Doble carne, queso, lechuga, tomate", "./images/hamburgesa.png",3),
+    new Prod(6, "Lomito Completo", 8000, "Lomo, queso, lechuga, tomate, huevo", "./images/lomito.png",3),
+    new Prod(7, "Coca Cola", 5000, "1.5lts","./images/cocacola.webp",4)
 ];
 
 const categorias = [
