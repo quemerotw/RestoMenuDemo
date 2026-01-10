@@ -1,172 +1,640 @@
-@import url('https://db.onlinewebfonts.com/c/7e62ec86368d99f49881363ba6b8edf1?family=The+Sherloks');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: Arial, sans-serif;}
+}
+
+body {
+    font-family: 'Lato', sans-serif;
+    overflow-x: hidden;
+}
 
 /* Header */
 header {
-  font-family: 'The Sherloks', serif;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #222;
-  color: #222;
-  padding: 15px 20px;
-  position: fixed;
-  width: 100%;
-  top: 0;
-  z-index: 1000;
-  background-image: url(images/navBar.png);
-  box-shadow:  0px 3px 28px #000000;
+    font-family: 'Lato', sans-serif;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #222;
+    color: #222;
+    padding: 15px 20px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    background-image: url(images/navBar.png);
+    box-shadow: 0px 3px 28px #000000;
 }
-.logo { font-weight: bold; font-size: 2.5vw; display:flex;}
-.logo img{
-  height :50px;
-} 
-.nosotros img{
-  height: 30vh;
-}
-.logo p{
-  padding-top: 15px;
-  padding-left: 20px;
-}
-nav ul { display: flex; gap: 20px; list-style: none; }
-nav a {   color: #222; text-decoration: none; font-weight: bold; font-size: 1.5vw; border-radius: 20px; border-width: 2px; border-style: dashed; padding: 10px 10px 10px 10px;}
-.menu-toggle { display: none; cursor: pointer; font-size: 30px; }
 
-
-#whatsappOverlay{
-  display: flex;
-  font-family: 'The Sherloks', sans-serif;
-  flex-direction: column;
-  color: #111;
-  text-decoration:none;
-  font-size: large;
-  text-align:center;
-  background-color:rgba(47, 202, 0, 0.507);
-  border-radius: 20px;
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  margin: 0 2vw 1vw 0;
-  padding: 10px 10px 10px 10px;
-  box-shadow: 0px 0px 10px 6px #111;
-  width: min-content;
-  backdrop-filter: blur(10px);
+.logo {
+    font-weight: bold;
+    font-size: clamp(1.2rem, 2.5vw, 2rem);
+    display: flex;
+    align-items: center;
 }
-.whatsapp-icon{
-  color: green;
-  font-size: 10vh;
-  filter: drop-shadow(0px 0px 7px #15ff00);
+
+    .logo img {
+        height: 50px;
+        width: auto;
+    }
+
+    .logo p {
+        padding-top: 15px;
+        padding-left: 20px;
+    }
+
+.buttons-container{
+    display:flex;
+}
+nav ul {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+}
+
+nav a {
+    color: #222;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: clamp(0.9rem, 1.5vw, 1.2rem);
+    border-radius: 20px;
+    border-width: 2px;
+    border-style: dashed;
+    padding: 10px;
+}
+
+.menu-toggle {
+    display: none;
+    cursor: pointer;
+}
+
+#whatsappOverlay {
+    display: flex;
+    font-family: 'Lato', sans-serif;
+    flex-direction: column;
+    color: #111;
+    text-decoration: none;
+    font-size: clamp(0.8rem, 2vw, 1.2rem);
+    text-align: center;
+    background-color: rgba(47, 202, 0, 0.507);
+    border-radius: 20px;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin: 0 2vw 1vh 0;
+    padding: 10px;
+    box-shadow: 0px 0px 10px 6px #111;
+    width: min-content;
+    backdrop-filter: blur(10px);
+    z-index: 999;
+}
+
+.fa-whatsapp {
+    color: green;
+    font-size: clamp(3rem, 10vh, 6rem);
+    filter: drop-shadow(0px 0px 7px #15ff00);
 }
 
 /* Categorías */
 .categoria {
-  font-family: 'The Sherloks', serif;
-  min-height: 50vh;
-  color: white;
-  padding: 120px 20px 60px;
-  text-align: center;
-  text-shadow: 0px 2px 2px #000000;
+    font-family: 'Lato', sans-serif;
+    min-height: 50vh;
+    color: black;
+    padding: 100px 20px 40px;
+    text-align: center;
+    text-shadow: 0px 2px 2px #000000;
 }
 
-#splash{
-  margin-top: 50px;
-  background-image: url(images/headerBack.jpeg);
-  background-size: cover;
-  background-position: top;
-  height: 30vh;
+#splash {
+    margin-top: 70px;
+    background-image: url(images/headerBack.jpeg);
+    background-size: cover;
+    background-position: center;
+    height: 30vh;
+    width: 100%;
 }
 
-.menu-list { margin-top: 20px; cursor: pointer;}
-.menu-list .item { margin-bottom: 7vw; }
-.menu-list h3 { font-size: 6vw;}
-.menu-list p { font-size: 3vw; margin-top: 10px; }
-.categoria h2 { font-size: 7vw; margin-bottom: 10vw;}
-
-/* Fondos estilo flyers */
-.primordiales { 
-    text-shadow: 0px 2px 2px #272727;
-    background: #c2a878;
-    color: #111;
-    background-image: url(images/intocablesback.png);
-    background-size:cover;
-    background-position: bottom;
+.menu-list {
+    margin-top: 20px;
+    cursor: pointer;
 }
-.intocables {
-   background: #b30000; 
-   background-image: url(images/intoBackground.jpeg);
-   background-size:cover;
-   background-position: bottom;
-  }     /* rojo */
-.imprescindibles {
-  background: #5b2a86;
-  background-image: url(images/impreBackground.jpeg);
-  background-size:cover;
-  background-position: bottom;
- } /* violeta */
 
+    .menu-list .item {
+        margin-bottom: 2rem;
+        padding: 10px;
+        transition: transform 0.2s;
+    }
+
+        .menu-list .item:hover {
+            transform: scale(1.02);
+        }
+
+    .menu-list h3 {
+        font-size: clamp(1.5rem, 4vw, 3rem);
+    }
+
+    .menu-list p {
+        font-size: clamp(1rem, 2.5vw, 2rem);
+        margin-top: 10px;
+    }
+
+.categoria h2 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: 5vh;
+}
 
 /* Nosotros */
 .nosotros {
-  padding: 80px 20px;
-  background: #eee;
-  text-align: center;
-  color: #222;
-  background-image: url(images/navBar.png);
-  font-family: 'The Sherloks', serif;
+    padding: 60px 20px;
+    background: #eee;
+    text-align: center;
+    color: #222;
+    background-image: url(images/navBar.png);
+    font-family: 'Lato', sans-serif;
 }
 
-.nosotros h2{
-  padding-top: 20px;
-  font-size: 5vh;
-}
+    .nosotros img {
+        max-height: 30vh;
+        width: auto;
+    }
+
+    .nosotros h2 {
+        padding-top: 20px;
+        font-size: clamp(1.5rem, 5vh, 3rem);
+    }
+
+    .nosotros p {
+        font-size: clamp(1rem, 3vh, 1.5rem);
+        margin-top: 10px;
+    }
 
 /* Footer */
 footer {
-  background: #111;
-  color: white;
-  text-align: center;
-  padding: 15px;
+    background: #111;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    font-size: clamp(0.8rem, 2vw, 1rem);
 }
+
+    footer a {
+        color: #4CAF50;
+        text-decoration: none;
+    }
+
+
+
+.menu-list .item h3,
+.menu-list .item p {
+    pointer-events: none; /* Evita que los clicks en los hijos interfieran */
+}
+/* Botón del carrito en el header */
+.cart-button {
+    position: relative;
+    cursor: pointer;
+    font-size: 24px;
+    color: #fff;
+    padding: 10px;
+    transition: transform 0.2s;
+}
+
+    .cart-button:hover {
+        transform: scale(1.1);
+    }
+
+.cart-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #e74c3c;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    animation: pulse 0.3s ease;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.8);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Overlay */
+.cart-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(3px);
+    z-index: 1998;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.cart-panel.active ~ .cart-overlay {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Panel del carrito */
+.cart-panel {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 400px;
+    max-width: 90vw;
+    height: 100vh;
+    background: #fff;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+    z-index: 1999;
+    display: flex;
+    flex-direction: column;
+    transition: right 0.3s ease;
+}
+
+    .cart-panel.active {
+        right: 0;
+    }
+
+/* Header del carrito */
+.cart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background: #222;
+    color: white;
+    background-image: url(images/navBar.png);
+}
+
+    .cart-header h2 {
+        margin: 0;
+        font-size: 1.5rem;
+    }
+
+.close-cart {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 5px 10px;
+    transition: transform 0.2s;
+}
+
+    .close-cart:hover {
+        transform: rotate(90deg);
+    }
+
+/* Body del carrito */
+.cart-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.empty-cart {
+    display: none;
+    text-align: center;
+    padding: 60px 20px;
+    color: #999;
+}
+
+    .empty-cart i {
+        font-size: 64px;
+        margin-bottom: 20px;
+        opacity: 0.3;
+    }
+
+    .empty-cart p {
+        font-size: 1.2rem;
+    }
+
+/* Items del carrito */
+.cart-items {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.cart-item {
+    background: #f9f9f9;
+    border-radius: 8px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.cart-item-info h4 {
+    margin: 0 0 5px 0;
+    font-size: 1.1rem;
+    color: #222;
+}
+
+.cart-item-price {
+    color: #666;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.cart-item-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-cantidad {
+    background: #222;
+    color: white;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    transition: all 0.2s;
+}
+
+    .btn-cantidad:hover {
+        background: #444;
+        transform: scale(1.1);
+    }
+
+    .btn-cantidad:active {
+        transform: scale(0.95);
+    }
+
+.cantidad {
+    font-weight: bold;
+    font-size: 1.1rem;
+    min-width: 30px;
+    text-align: center;
+}
+
+.btn-eliminar {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: auto;
+    transition: all 0.2s;
+}
+
+    .btn-eliminar:hover {
+        background: #c0392b;
+        transform: scale(1.1);
+    }
+
+.cart-item-subtotal {
+    text-align: right;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #222;
+}
+
+/* Footer del carrito */
+.cart-footer {
+    padding: 20px;
+    background: #f5f5f5;
+    border-top: 2px solid #ddd;
+    display: none;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.cart-total-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.3rem;
+    font-weight: bold;
+    padding: 10px 0;
+    border-bottom: 2px solid #222;
+}
+
+.cart-total-amount {
+    color: #27ae60;
+}
+
+.btn-vaciar {
+    background: #95a5a6;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: all 0.2s;
+}
+
+    .btn-vaciar:hover {
+        background: #7f8c8d;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+.btn-finalizar {
+    background: #27ae60;
+    color: white;
+    border: none;
+    padding: 15px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.2s;
+}
+
+    .btn-finalizar:hover {
+        background: #229954;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(39, 174, 96, 0.4);
+    }
+
+    .btn-finalizar i {
+        font-size: 1.3rem;
+    }
+
+/* Notificación */
+.cart-notification {
+    position: fixed;
+    bottom: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #27ae60;
+    color: white;
+    padding: 15px 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 2000;
+    transition: bottom 0.3s ease;
+    font-weight: bold;
+}
+
+    .cart-notification.show {
+        bottom: 30px;
+    }
 
 /* Responsive */
 @media (max-width: 1024px) {
-  nav ul { gap: 10px; font-size: 14px; }
-  .contacto .telefono { font-size: 28px; }
+    nav ul {
+        gap: 10px;
+    }
+
+    .categoria {
+        padding: 90px 15px 30px;
+    }
 }
+
 @media (max-width: 768px) {
+    nav {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 60%;
+        height: 100vh;
+        background: #222;
+        flex-direction: column;
+        transition: left 0.3s ease;
+        padding-top: 80px;
+        padding-left: 20px;
+        padding-right: 20px;
+        background-image: url(images/navBar.png);
+        overflow-y: auto;
+    }
+
+    .categoria {
+        padding-top: 90px;
+        padding-bottom: 30px;
+    }
+
+        .categoria h2 {
+            margin-bottom: 3vh;
+        }
+
+    nav ul {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    nav a {
+        font-size: 1.5rem;
+        display: block;
+        padding: 15px;
+    }
+
+    .logo p {
+        font-size: clamp(1.2rem, 5vw, 1.8rem);
+    }
+
+    .menu-toggle {
+        display: block;
+        color: #fff;
+        font-size: 24px;
+        padding: 10px;
+    }
+
+    #splash {
+        margin-top: 70px;
+        height: 25vh;
+    }
+
+    #whatsappOverlay {
+        margin: 0 3vw 2vh 0;
+        padding: 8px;
+    }
+    .cart-panel {
+        width: 100%;
+        max-width: 100vw;
+        right: -100%;
+    }
+
+    .cart-item {
+        padding: 12px;
+    }
+
+    .cart-item-info h4 {
+        font-size: 1rem;
+    }
+
+    .btn-cantidad {
+        width: 28px;
+        height: 28px;
+        font-size: 16px;
+    }
+
+    .cart-footer {
+        padding: 15px;
+    }
+
+    .cart-total-section {
+        font-size: 1.1rem;
+    }
+}
 
 
-  nav { 
-    position: fixed; 
-    top: 0; 
-    left: -100%; 
-    width:auto; 
-    height: 100%; 
-    background: #222; 
-    flex-direction: column;
-    transition: left 0.3s ease;
-    padding-top: 60px;
-    padding-left: 20px;
-    padding-right: 20px;
-    background-image: url(images/navBar.png);
-  }
-  .categoria{
-    padding-top: 20%;
-  }
 
-  .categoria p{
-    font-size: medium;
-  }
 
-  nav ul { flex-direction: column; gap: 30px;}
-  nav a{
-    font-size: 4vw;
-  }
-  .logo p{
-    font-size: 30px;
-    text-align: center;
-  }
-  .menu-toggle { display: block; }
+@media (max-width: 480px) {
+    header {
+        padding: 10px 15px;
+    }
+
+    .logo img {
+        height: 40px;
+    }
+
+    .logo p {
+        padding-left: 10px;
+        padding-top: 10px;
+    }
+
+    .categoria {
+        padding-top: 80px;
+    }
+
+    .menu-list .item {
+        margin-bottom: 1.5rem;
+    }
+
+    nav {
+        width: 70%;
+    }
+    .cart-header h2 {
+        font-size: 1.2rem;
+    }
+
+    .cart-notification {
+        width: 90%;
+        padding: 12px 20px;
+        font-size: 0.9rem;
+    }
 }

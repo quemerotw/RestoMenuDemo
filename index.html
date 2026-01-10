@@ -3,152 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pipina Pizza & Cocina🍕😺</title>
+    <title>Menu Resto</title>
+    <script src="https://kit.fontawesome.com/80df01cda2.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- Header -->
-  <header>
-    <div class="logo"><img id="logoPipina" src="images/logoNav.png" alt="">
-      <p>Pipina pizza & Cocina</p>
+    <header>
+        <div class="logo">
+            <img id="logoPipina" src="images/logoNav.png" alt="">
+            <p>RestoFan</p>
+        </div>
+        <nav id="navbar">
+            <ul>
+                <li><a href="#primordiales">Primordiales</a></li>
+                <li><a href="#intocables">Intocables</a></li>
+                <li><a href="#imprescindibles">Imprescindibles</a></li>
+                <li><a href="#nosotros">Nosotros</a></li>
+            </ul>
+        </nav>
+        <div class="buttons-container">
+            <div class="menu-toggle" id="menu-toggle"><i class="fa-solid fa-list"></i></div>
+            <div class="cart-button" onclick="carrito.toggleCart()">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span id="cart-badge" class="cart-badge">0</span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <a id="whatsappOverlay" href="" target="_blank">hace tu pedido<i id="wapp" class="fa-brands fa-whatsapp"></i></a>
+        <section id="splash">
+        </section>
+        <div id="page">
+
+        </div>
+
+        <!-- NOSOTROS -->
+        <section id="nosotros" class="nosotros">
+            <img src="images/logo.png" alt="">
+            <h2>Vivero Esperanza</h2>
+            <p>Escribinos al Whatsapp </p>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2026 - Página creada por [Agustin Coronel]</p>
+        <a href="https://quemerotw.github.io/Portfolio/">Portfolio</a>
+    </footer>
+
+    <div id="cart-overlay" class="cart-overlay"></div>
+
+    <div id="cart-panel" class="cart-panel">
+        <div class="cart-header">
+            <h2>Mi Carrito</h2>
+            <button id="close-cart" class="close-cart">✖</button>
+        </div>
+
+        <div class="cart-body">
+            <div id="empty-cart-message" class="empty-cart">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <p>Tu carrito está vacío</p>
+            </div>
+            <div id="cart-items" class="cart-items"></div>
+        </div>
+
+        <div id="cart-footer" class="cart-footer">
+            <div class="cart-total-section">
+                <span>Total:</span>
+                <span id="cart-total" class="cart-total-amount">$0</span>
+            </div>
+            <button class="btn-vaciar" onclick="carrito.vaciarCarrito()">
+                Vaciar Carrito
+            </button>
+            <button class="btn-finalizar" onclick="carrito.finalizarCompra()">
+                <i class="fa-brands fa-whatsapp"></i>
+                Finalizar Pedido
+            </button>
+        </div>
     </div>
-    <nav id="navbar">
-      <ul>
-        <li><a href="#primordiales">Primordiales</a></li>
-        <li><a href="#intocables">Intocables</a></li>
-        <li><a href="#imprescindibles">Imprescindibles</a></li>
-        <li><a href="#nosotros">Nosotros</a></li>
-      </ul>
-    </nav>
-    <div class="menu-toggle" id="menu-toggle">☰</div>
-  </header>
-
-  <main>
-    <a id="whatsappOverlay" href="https://wa.me/542804978730" target="_blank">hace tu pedido<i id="wapp" class="fab fa-whatsapp whatsapp-icon"></i></a>
-    <section id="splash">
-    </section>
-    <!-- PRIMORDIALES -->
-    <section id="primordiales" class="categoria primordiales">
-      <h2>Primordiales - $12.500</h2>
-      <div class="menu-list">
-        <div class="item">
-          <h3>Margarita</h3>
-          <p>Tomate, mozzarella, albahaca y oliva</p>
-        </div>
-        <div class="item">
-          <h3>Fugazza</h3>
-          <p>Mozzarella, cebolla, orégano, ají molido y oliva</p>
-        </div>
-        <div class="item">
-          <h3>Mozzarella</h3>
-          <p>Tomate, mozzarella, orégano, ají y oliva</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- INTOCABLES -->
-    <section id="intocables" class="categoria intocables">
-      <h2>Intocables - $14.300</h2>
-      <div class="menu-list">
-        <div class="item">
-          <h3>Pepperoni</h3>
-          <p>Tomate, mozzarella, pepperoni y orégano</p>
-        </div>
-        <div class="item">
-          <h3>Capresse</h3>
-          <p>Tomate, mozzarella, tomate cherry, albahaca y oliva</p>
-        </div>
-        <div class="item">
-          <h3>Napolitana</h3>
-          <p>Tomate, mozzarella, tomate cherry, ajo, orégano</p>
-        </div>
-        <div class="item">
-          <h3>Jamón</h3>
-          <p>Tomate, mozzarella, jamón cocido, morrones asados</p>
-        </div>
-        <div class="item">
-          <h3>Diávola</h3>
-          <p>Tomate, mozzarella, cantimpalo, ají molido</p>
-        </div>
-        <div class="item">
-          <h3>Champiñones</h3>
-          <p>Tomate, mozzarella, champiñones, orégano, oliva</p>
-        </div>
-        <div class="item">
-          <h3>Vegetariana Simple</h3>
-          <p>Tomate, mozzarella, berenjena, zuccini, cherry</p>
-        </div>
-        <div class="item">
-          <h3>3 Cebollas</h3>
-          <p>Tomate, mozzarella, cebolla blanca, morada y verde, orégano, oliva</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- IMPRESCINDIBLES -->
-    <section id="imprescindibles" class="categoria imprescindibles">
-      <h2>Imprescindibles - $15.200</h2>
-      <div class="menu-list">
-        <div class="item">
-          <h3>Prosciutto</h3>
-          <p>Tomate, mozzarella, jamón crudo, oliva</p>
-        </div>
-        <div class="item">
-          <h3>Nottimagiche</h3>
-          <p>Mozzarella, rúcula, cherry, escamas de queso duro, oliva</p>
-        </div>
-        <div class="item">
-          <h3>Caprichosa</h3>
-          <p>Tomate, mozzarella, jamón cocido, huevo duro, alcaucil, champiñones</p>
-        </div>
-        <div class="item">
-          <h3>4 Quesos</h3>
-          <p>Mozzarella, queso azul, fontina, escamas de queso duro, granola de nueces</p>
-        </div>
-        <div class="item">
-          <h3>Amalfitana</h3>
-          <p>Tomate, mozzarella, crudo, albahaca, cherry, aceitunas negras</p>
-        </div>
-        <div class="item">
-          <h3>Griega</h3>
-          <p>Tomate, mozzarella, 3 cebollas, aceitunas negras, roquefort, cherry, orégano</p>
-        </div>
-        <div class="item">
-          <h3>Vegetariana Completa</h3>
-          <p>Tomate, mozzarella, cebollas, berenjenas, zuccini, cherry, morrones, oliva</p>
-        </div>
-        <div class="item">
-          <h3>Provoletta</h3>
-          <p>Tomate, mozzarella, provolone, tomates secos, ají y orégano, oliva</p>
-        </div>
-        <div class="item">
-          <h3>Panceta y Huevo</h3>
-          <p>Tomate, mozzarella, verdeo, panceta crocante, huevo duro, orégano</p>
-        </div>
-        <div class="item">
-          <h3>Incondicional</h3>
-          <p>Tomate, mozzarella, portobellos, tomates secos, ají y romero, oliva</p>
-        </div>
-      </div>
-    </section>
-
-    
-
-    <!-- NOSOTROS -->
-    <section id="nosotros" class="nosotros">
-      <img src="images/logo.png" alt="">
-      <h2>Pipina Pizza y Cocina</h2>
-      <p>Pedidos Por whatsapp al 2804978730</p>
-    </section>
-  </main>
-
-  <footer>
-    <p>© 2025 - Página creada por [Agustin Coronel]</p>
-    <a href="https://quemerotw.github.io/Portfolio/">Portfolio</a>
-  </footer>
-
-  <script src="main.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>
