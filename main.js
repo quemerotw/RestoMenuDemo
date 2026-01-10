@@ -25,7 +25,6 @@ class Overlay {
 
 class Popup {
     constructor(producto) {
-        console.log(producto);
         this.pic = document.createElement("img");
         this.pic.style.width = "30vh";
         this.pic.src = producto.img;
@@ -121,9 +120,12 @@ class Prod {
     }
     toHtml() {
         return `<label class="item" data-producto-id="${this.id}">
-            <h3 class="name"> ${this.nombre}</h3>
-                <p class="det">${this.detalle}</p>
-                <p class="price">${this.precio}</p>
+            <div class="itemInfo">
+                <h3 class="name"> ${this.nombre}</h3>
+                    <p class="det">${this.detalle}</p>
+                    <p class="price">${this.precio}</p>
+            </div>
+            <img src="${this.img}" alt="${this.nombre}" class="item-img">
         </label >
         `
     }
@@ -427,6 +429,8 @@ function mostrarProds(prod) {
 function insertarCategorias(){
     const dis = document.getElementById("page");
     dis.innerHTML = categorias.map(cat => cat.toHtmlCat()).join('');
+    const tat = document.getElementById("navList");
+    tat.innerHTML = categorias.map(cat => cat.toHtmlList()).join('');
 }
 document.addEventListener('DOMContentLoaded', () => {
     insertarCategorias();
@@ -434,4 +438,5 @@ document.addEventListener('DOMContentLoaded', () => {
         mostrarProds(prod);
     });
     agregarListen();
+
 });
