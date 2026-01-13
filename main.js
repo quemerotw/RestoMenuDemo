@@ -20,7 +20,7 @@ class Empresa {
     }
 }
 
-const empresa = new Empresa("RestoFan", "", "", "+542804220856");
+const empresa = new Empresa("RestoFan", "./images/splash.png", "./images/logo.png", "+542804220856");
 
 class BackButtonManager {
     constructor() {
@@ -158,6 +158,7 @@ class Popup {
             this.element.style.transform = "scale(1)";
             this.element.style.opacity = "1";
         });
+        backButtonManager.pushState('popup');
     }
     bloquear() {
         document.body.style.overflow = "hidden";
@@ -378,6 +379,7 @@ class Cart {
                 document.body.style.overflow = 'hidden';
             } else {
                 document.body.style.overflow = 'auto';
+                backButtonManager.pushState('cart');
             }
         }
     }
@@ -468,7 +470,9 @@ menuToggle.addEventListener("click", () => {
   if (navbar.style.left === "0px") {
     navbar.style.left = "-100%";
   } else {
-    navbar.style.left = "0px";
+      navbar.style.left = "0px";
+      backButtonManager.pushState('menu');
+
   }
 });
 
