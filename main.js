@@ -92,87 +92,83 @@ class Overlay {
 
 class Popup {
     constructor(producto) {
-        this.pic = document.createElement("img");
-        this.pic.style.width = "30vh";
-        this.pic.src = producto.img;
-        this.pic.style.filter = "drop-shadow(2px 19px 15px #000000)";
+        // Crear overlay
+        this.overlay = new Overlay().overlay;
+        this.element = document.createElement("div");
+        this.element.className = "popup-container";
+
+        // Botón cerrar
         const closeBtn = document.createElement("button");
-        const addToCartBtn = document.createElement("button");
-        addToCartBtn.textContent = "Agregar al Carrito";
-        addToCartBtn.style.marginTop = "20px";
-        addToCartBtn.style.padding = "12px 24px";
-        addToCartBtn.style.backgroundColor = "#27ae60";
-        addToCartBtn.style.color = "white";
-        addToCartBtn.style.border = "none";
-        addToCartBtn.style.borderRadius = "5px";
-        addToCartBtn.style.cursor = "pointer";
-        addToCartBtn.style.fontSize = "16px";
-        addToCartBtn.style.fontWeight = "bold";
-        addToCartBtn.addEventListener("click", () => {
-            carrito.agregarProd(producto);
-        });
-        closeBtn.textContent = "✖";
-        closeBtn.style.position = "absolute";
-        closeBtn.style.top = "5px";
-        closeBtn.style.right = "15px";
-        closeBtn.style.borderStyle = "none";
-        closeBtn.style.background = "transparent";
-        closeBtn.style.fontSize = "30px";
-        closeBtn.style.cursor = "pointer";
-        closeBtn.style.filter = "drop-shadow(0px 0px 2px #e5a50a)";
+        closeBtn.className = "popup-close";
+        closeBtn.innerHTML = "✖";
         closeBtn.addEventListener("click", () => this.destroy());
 
+        // Imagen del producto
+        const pic = document.createElement("img");
+        pic.className = "popup-img";
+        pic.src = producto.img;
+        pic.alt = producto.nombre;
 
+        // Título
+        const titulo = document.createElement("h3");
+        titulo.className = "popup-title";
+        titulo.textContent = producto.nombre;
 
-        const textoTitulo = document.createElement("p");
-        textoTitulo.style.textAlign = "center";
-        textoTitulo.style.fontSize = "30px";
-        textoTitulo.style.paddingTop = "10px";
-        textoTitulo.style.paddingBottom = "10px";
-        textoTitulo.style.fontFamily = "'The Sherloks', serif";
-        textoTitulo.textContent = producto.nombre;
+        // Detalle
+        const detalle = document.createElement("p");
+        detalle.className = "popup-detail";
+        detalle.textContent = producto.detalle;
 
-        const textoDetalle = document.createElement("p");
-        textoDetalle.style.textAlign = "center";
-        textoDetalle.style.fontSize = "18px";
-        textoDetalle.style.paddingTop = "10px";
+        // Precio
+        const precio = document.createElement("p");
+        precio.className = "popup-price";
+        precio.textContent = `$${producto.precio.toLocaleString('es-AR')}`;
 
-        textoDetalle.style.fontFamily = "'The Sherloks', serif";
-        textoDetalle.textContent = producto.detalle;
+        // Botón agregar al carrito
+        const addToCartBtn = document.createElement("button");
+        addToCartBtn.className = "popup-btn-cart";
+        addToCartBtn.innerHTML = `<i class="fa-solid fa-cart-plus"></i> Agregar al Carrito`;
+        addToCartBtn.addEventListener("click", () => {
+            carrito.agregarProd(producto);
+            this.destroy();
+        });
 
-        this.element = new DivOverlay().element;
-        this.overlay = new Overlay().overlay;
-
-        this.element.appendChild(textoTitulo);
-        this.element.appendChild(this.pic);
+        // Ensamblar popup
         this.element.appendChild(closeBtn);
-        this.element.appendChild(textoDetalle);
-        this.overlay.appendChild(this.element);
+        this.element.appendChild(pic);
+        this.element.appendChild(titulo);
+        this.element.appendChild(detalle);
+        this.element.appendChild(precio);
         this.element.appendChild(addToCartBtn);
+
+        this.overlay.appendChild(this.element);
         document.body.appendChild(this.overlay);
+
         this.bloquear();
         void this.overlay.offsetWidth;
 
         requestAnimationFrame(() => {
-            this.overlay.style.opacity = "1"; // fade in overlay
+            this.overlay.style.opacity = "1";
             this.element.style.transform = "scale(1)";
             this.element.style.opacity = "1";
         });
+
         backButtonManager.pushState('popup');
     }
+
     bloquear() {
         document.body.style.overflow = "hidden";
     }
+
     destroy() {
         this.overlay.style.opacity = "0";
         this.element.style.transform = "scale(0.8)";
         this.element.style.opacity = "0";
 
-        // Esperar la transición antes de eliminar
         setTimeout(() => {
             this.overlay.remove();
             document.body.style.overflow = "auto";
-        }, 300); // mismo tiempo que transition
+        }, 300);
     }
 }
 
@@ -188,12 +184,12 @@ class Prod {
     }
     toHtml() {
         return `<label class="item" data-producto-id="${this.id}">
+            <img src="${this.img}" alt="${this.nombre}" class="item-img">
             <div class="itemInfo">
                 <h3 class="name"> ${this.nombre}</h3>
                     <p class="det">${this.detalle}</p>
-                    <p class="price">${this.precio}</p>
+                    <p class="price">$${this.precio}</p>
             </div>
-            <img src="${this.img}" alt="${this.nombre}" class="item-img">
         </label >
         `
     }
@@ -402,16 +398,12 @@ class Cart {
     }
 
     finalizarCompra() {
-        const mensaje = this.generarMensajeWhatsApp();
-        if (mensaje) {
-            // Reemplaza este número con el número de WhatsApp del negocio
-
-            const url = `https://wa.me/${empresa.numero}?text=${mensaje}`;
-            window.open(url, '_blank');
-
-            // Opcional: vaciar el carrito después de enviar
-            // this.vaciarCarrito();
+        if (this.itemsCart.length === 0) {
+            alert('El carrito está vacío');
+            return;
         }
+
+        new CheckoutPopup(this);
     }
 
     mostrarNotificacion(mensaje) {
@@ -434,7 +426,230 @@ class Cart {
 
 
 const carrito = new Cart();
+class CheckoutPopup {
+    constructor(carrito) {
+        this.carrito = carrito;
+        this.overlay = this.createOverlay();
+        this.element = this.createPopup();
+        this.direccion = '';
+        this.isTakeAway = false;
 
+        this.overlay.appendChild(this.element);
+        document.body.appendChild(this.overlay);
+
+        this.bloquear();
+        void this.overlay.offsetWidth;
+
+        requestAnimationFrame(() => {
+            this.overlay.style.opacity = "1";
+            this.element.style.transform = "scale(1)";
+            this.element.style.opacity = "1";
+        });
+
+        if (typeof backButtonManager !== 'undefined') {
+            backButtonManager.pushState('checkout');
+        }
+    }
+
+    createOverlay() {
+        const overlay = document.createElement("div");
+        overlay.className = "checkout-overlay";
+        overlay.addEventListener("click", (e) => {
+            if (e.target === overlay) {
+                this.destroy();
+            }
+        });
+        return overlay;
+    }
+
+    createPopup() {
+        const popup = document.createElement("div");
+        popup.className = "checkout-popup";
+
+        // Header
+        const header = document.createElement("div");
+        header.className = "checkout-header";
+
+        const title = document.createElement("h2");
+        title.textContent = "Finalizar Pedido";
+
+        const closeBtn = document.createElement("button");
+        closeBtn.className = "checkout-close";
+        closeBtn.innerHTML = "✖";
+        closeBtn.addEventListener("click", () => this.destroy());
+
+        header.appendChild(title);
+        header.appendChild(closeBtn);
+
+        // Body
+        const body = document.createElement("div");
+        body.className = "checkout-body";
+
+        // Resumen del pedido
+        const resumen = this.createResumen();
+
+        // Checkbox Take Away
+        const takeAwayContainer = document.createElement("div");
+        takeAwayContainer.className = "checkout-takeaway";
+
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.id = "takeaway-check";
+        checkbox.addEventListener("change", (e) => {
+            this.isTakeAway = e.target.checked;
+            direccionInput.disabled = e.target.checked;
+            if (e.target.checked) {
+                direccionInput.value = '';
+                direccionInput.placeholder = "Retiro en local";
+            } else {
+                direccionInput.placeholder = "Ej: Calle 123, Barrio, Ciudad";
+            }
+        });
+
+        const label = document.createElement("label");
+        label.htmlFor = "takeaway-check";
+        label.innerHTML = '<i class="fa-solid fa-bag-shopping"></i> Retiro en local (Take Away)';
+
+        takeAwayContainer.appendChild(checkbox);
+        takeAwayContainer.appendChild(label);
+
+        // Campo de dirección
+        const direccionContainer = document.createElement("div");
+        direccionContainer.className = "checkout-direccion";
+
+        const direccionLabel = document.createElement("label");
+        direccionLabel.textContent = "Dirección de envío:";
+
+        const direccionInput = document.createElement("input");
+        direccionInput.type = "text";
+        direccionInput.placeholder = "Ej: Calle 123, Barrio, Ciudad";
+        direccionInput.className = "direccion-input";
+        direccionInput.addEventListener("input", (e) => {
+            this.direccion = e.target.value;
+        });
+
+        direccionContainer.appendChild(direccionLabel);
+        direccionContainer.appendChild(direccionInput);
+
+        // Botones
+        const actions = document.createElement("div");
+        actions.className = "checkout-actions";
+
+        const cancelBtn = document.createElement("button");
+        cancelBtn.className = "btn-cancel";
+        cancelBtn.textContent = "Cancelar";
+        cancelBtn.addEventListener("click", () => this.destroy());
+
+        const confirmBtn = document.createElement("button");
+        confirmBtn.className = "btn-confirm";
+        confirmBtn.innerHTML = '<i class="fa-brands fa-whatsapp"></i> Enviar Pedido';
+        confirmBtn.addEventListener("click", () => this.confirmar());
+
+        actions.appendChild(cancelBtn);
+        actions.appendChild(confirmBtn);
+
+        // Ensamblar
+        body.appendChild(resumen);
+        body.appendChild(takeAwayContainer);
+        body.appendChild(direccionContainer);
+        body.appendChild(actions);
+
+        popup.appendChild(header);
+        popup.appendChild(body);
+
+        return popup;
+    }
+
+    createResumen() {
+        const resumen = document.createElement("div");
+        resumen.className = "checkout-resumen";
+
+        const title = document.createElement("h3");
+        title.textContent = "Resumen del pedido:";
+
+        const items = document.createElement("div");
+        items.className = "checkout-items";
+
+        this.carrito.itemsCart.forEach(item => {
+            const itemDiv = document.createElement("div");
+            itemDiv.className = "checkout-item";
+            itemDiv.innerHTML = `
+                <span>${item.nombre} x${item.cantidad}</span>
+                <span>$${(item.precio * item.cantidad).toLocaleString('es-AR')}</span>
+            `;
+            items.appendChild(itemDiv);
+        });
+
+        const total = document.createElement("div");
+        total.className = "checkout-total";
+        total.innerHTML = `
+            <strong>Total:</strong>
+            <strong>$${this.carrito.calcularTotal().toLocaleString('es-AR')}</strong>
+        `;
+
+        resumen.appendChild(title);
+        resumen.appendChild(items);
+        resumen.appendChild(total);
+
+        return resumen;
+    }
+
+    confirmar() {
+        if (!this.isTakeAway && !this.direccion.trim()) {
+            alert('Por favor, ingresa una dirección de envío o selecciona retiro en local');
+            return;
+        }
+
+        const mensaje = this.generarMensajeWhatsApp();
+        const numeroWhatsApp = empresa.numero; // CAMBIAR POR TU NÚMERO
+        const url = `https://wa.me/${numeroWhatsApp}?text=${mensaje}`;
+
+        window.open(url, '_blank');
+
+        // Cerrar popup y carrito
+        this.destroy();
+        if (this.carrito && this.carrito.toggleCart) {
+            this.carrito.toggleCart();
+        }
+
+        // Opcional: vaciar carrito
+        // this.carrito.vaciarCarrito();
+    }
+
+    generarMensajeWhatsApp() {
+        let mensaje = '🍕 *NUEVO PEDIDO* 🍕\n\n';
+
+        mensaje += '*Productos:*\n';
+        this.carrito.itemsCart.forEach(item => {
+            mensaje += `• ${item.nombre} x${item.cantidad} - $${(item.precio * item.cantidad).toLocaleString('es-AR')}\n`;
+        });
+
+        mensaje += `\n*Total: $${this.carrito.calcularTotal().toLocaleString('es-AR')}*\n\n`;
+
+        if (this.isTakeAway) {
+            mensaje += '📦 *Modalidad:* Retiro en local (Take Away)';
+        } else {
+            mensaje += `🚚 *Dirección de envío:*\n${this.direccion}`;
+        }
+
+        return encodeURIComponent(mensaje);
+    }
+
+    bloquear() {
+        document.body.style.overflow = "hidden";
+    }
+
+    destroy() {
+        this.overlay.style.opacity = "0";
+        this.element.style.transform = "scale(0.8)";
+        this.element.style.opacity = "0";
+
+        setTimeout(() => {
+            this.overlay.remove();
+            document.body.style.overflow = "auto";
+        }, 300);
+    }
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     const cartOverlay = document.getElementById('cart-overlay');
