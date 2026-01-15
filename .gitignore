@@ -1,0 +1,15 @@
+# Visual Studio 2022 - Archivos temporales y de configuración
+.vs/
+[Bb]in/
+[Obj]/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
