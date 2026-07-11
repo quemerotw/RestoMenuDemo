@@ -617,8 +617,12 @@ class CheckoutPopup {
     }
 
     generarMensajeWhatsApp() {
-        let mensaje = '🍕 *NUEVO PEDIDO* 🍕\n\n';
-
+        let mensaje = ' *NUEVO PEDIDO* \n\n';
+        if (this.isTakeAway) {
+            mensaje += ' *Modalidad:* Retiro en local (Take Away)';
+        } else {
+            mensaje += ` *Dirección de envío:*\n${this.direccion}`;
+        }
         mensaje += '*Productos:*\n';
         this.carrito.itemsCart.forEach(item => {
             mensaje += `• ${item.nombre} x${item.cantidad} - $${(item.precio * item.cantidad).toLocaleString('es-AR')}\n`;
@@ -626,11 +630,7 @@ class CheckoutPopup {
 
         mensaje += `\n*Total: $${this.carrito.calcularTotal().toLocaleString('es-AR')}*\n\n`;
 
-        if (this.isTakeAway) {
-            mensaje += '📦 *Modalidad:* Retiro en local (Take Away)';
-        } else {
-            mensaje += `🚚 *Dirección de envío:*\n${this.direccion}`;
-        }
+        
 
         return encodeURIComponent(mensaje);
     }
